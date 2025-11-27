@@ -311,6 +311,7 @@
 
 <script>
   const PRODUCT_PRICE = 39.99;
+  const TAX_RATE = 0.0968;
   const CART_KEY = "novejet_cart";
 
   let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
@@ -336,12 +337,20 @@
 
   function updateCartUI() {
     const qty = cart.qty || 0;
-    cartQtySpan.textContent = qty;
     navCartCount.textContent = qty;
+    cartQtySpan.textContent = qty;
+
     const subtotal = PRODUCT_PRICE * qty;
+    const taxAmount = subtotal * TAX_RATE;
+    const total = subtotal + taxAmount;
+
     cartSubtotalSpan.textContent = subtotal.toFixed(2);
-    cartTotalSpan.textContent = subtotal.toFixed(2);
-    cartMiniLabel.textContent = qty === 0 ? "No jets yet" : qty + " jet" + (qty > 1 ? "s" : "") + " ready";
+    cartTotalSpan.textContent = total.toFixed(2);
+
+    cartMiniLabel.textContent =
+      qty === 0
+        ? "No jets yet"
+        : qty + " jet" + (qty > 1 ? "s" : "") + " ready (tax at checkout)";
   }
 
   function addJetToCart() {
@@ -349,27 +358,47 @@
     cart.price = PRODUCT_PRICE;
     saveCart();
     updateCartUI();
-    heroBuyBtn.textContent = "Added to hangar ✔";
-    setTimeout(() => heroBuyBtn.textContent = "Add Jet to Hangar", 1300);
+    if (heroBuyBtn) {
+      heroBuyBtn.textContent = "Added to hangar ✔";
+      setTimeout(() => (heroBuyBtn.textContent = "Add Jet to Hangar"), 1300);
+    }
   }
 
-  heroBuyBtn.addEventListener("click", addJetToCart);
-  if (mobileAddBtn) mobileAddBtn.addEventListener("click", addJetToCart);
+  if (heroBuyBtn) {
+    heroBuyBtn.addEventListener("click", addJetToCart);
+  }
 
-  navBuyBtn.addEventListener("click", function () {
-    addJetToCart();
-    window.location.href = "cart.html";
-  });
-  navCartBtn.addEventListener("click", function () {
-    window.location.href = "cart.html";
-  });
-  cartCheckoutBtn.addEventListener("click", function () {
-    window.location.href = "cart.html";
-  });
+  if (mobileAddBtn) {
+    mobileAddBtn.addEventListener("click", addJetToCart);
+  }
 
-  document.querySelectorAll(".thumb").forEach(thumb => {
+  // 🔥 Launch Jet now adds to cart AND goes straight to checkout
+  if (navBuyBtn) {
+    navBuyBtn.addEventListener("click", function () {
+      addJetToCart();
+      window.location.href = "checkout.html";
+    });
+  }
+
+  if (navCartBtn) {
+    navCartBtn.addEventListener("click", function () {
+      window.location.href = "cart.html";
+    });
+  }
+
+  // from mini cart drawer
+  if (cartCheckoutBtn) {
+    cartCheckoutBtn.addEventListener("click", function () {
+      window.location.href = "checkout.html";
+    });
+  }
+
+  // thumbnail switching
+  document.querySelectorAll(".thumb").forEach((thumb) => {
     thumb.addEventListener("click", function () {
-      document.querySelectorAll(".thumb").forEach(t => t.classList.remove("active"));
+      document
+        .querySelectorAll(".thumb")
+        .forEach((t) => t.classList.remove("active"));
       thumb.classList.add("active");
       const img = thumb.getAttribute("data-img");
       heroJetImage.src = img;
@@ -378,5 +407,7 @@
 
   updateCartUI();
 </script>
+
 </body>
 </html>
+
