@@ -16,10 +16,14 @@
     <div id="cartContent"></div>
 
     <div id="totals" class="totals" style="display:none;">
-      <div>Subtotal: $<span id="subtotal">0.00</span></div>
-      <div><strong>Total: $<span id="total">0.00</span> USD</strong></div>
-      <div class="muted" style="font-size:0.8rem;">Taxes &amp; fees (if any) are shown on your Razorpay receipt.</div>
-    </div>
+  <div>Subtotal: $<span id="subtotal">0.00</span></div>
+  <div>Tax (9.68%): $<span id="tax">0.00</span></div>
+  <div><strong>Total: $<span id="total">0.00</span> USD</strong></div>
+  <div class="muted" style="font-size:0.8rem;">
+    Taxes are calculated based on your region (9.68%).
+  </div>
+</div>
+
 
     <button id="checkoutBtn" class="simple-btn-primary checkout-btn" style="display:none;">
       Checkout with Razorpay
@@ -134,3 +138,4 @@
 </script>
 </body>
 </html>
+
