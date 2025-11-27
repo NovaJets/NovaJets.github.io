@@ -10,58 +10,180 @@
 <body>
 
 <header class="nav">
-  <div class="nav-left">NOVEJET</div>
+  <div class="nav-left">
+    <div class="logo-orb"><div class="logo-orb-inner">NJ</div></div>
+    <div class="brand">NOVEJET</div>
+  </div>
 
   <div class="nav-right">
-    <button id="navCartBtn" class="nav-cart">
+    <button id="navCartBtn" class="nav-cart-btn">
       Cart <span id="navCartCount" class="nav-cart-count" style="display:none;"></span>
     </button>
-
-    <button id="navBuyBtn" class="launch-btn">LAUNCH JET</button>
+    <button id="navBuyBtn" class="btn-pill">
+      <span class="icon">✈️</span> Launch Jet
+    </button>
   </div>
 </header>
 
 <main class="wrap">
 
+  <!-- ============================= -->
+  <!-- HERO SECTION (FUTURISTIC)     -->
+  <!-- ============================= -->
   <section class="hero">
-    <h1>Turn any park into a runway.</h1>
-    <p>Meet the NoveJet RC Fighter — height-hold, crash-resistant, rechargeable.</p>
+    <!-- LEFT TEXT AREA -->
+    <div>
+      <div class="eyebrow">NoveJet RC Fighter</div>
+      <h1 class="hero-title">
+        Turn any park<br>into a <span class="hero-gradient">runway.</span>
+      </h1>
 
-    <button id="heroBuyBtn" class="cta-primary">Add Jet to Hangar</button>
-  </section>
+      <p class="hero-sub">
+        Height-hold. Crash-resistant. Rechargeable.<br>
+        Built for beginners. Fast enough for pros.
+      </p>
 
-  <section class="product-section">
-    <img id="heroJetImage" src="jet-hero.jpg" class="main-jet" />
+      <div class="hero-meta-row">
+        <div class="pill"><strong>35%</strong> OFF Today</div>
+        <div class="pill">Free Shipping</div>
+        <div class="pill-hot">#1 Trending Jet</div>
+      </div>
 
-    <div class="thumbs">
-      <button class="thumb active" data-img="jet-hero.jpg"><img src="jet-hero.jpg"></button>
-      <button class="thumb" data-img="jet-top.jpg"><img src="jet-top.jpg"></button>
-      <button class="thumb" data-img="jet-night.jpg"><img src="jet-night.jpg"></button>
+      <div class="hero-cta-row">
+        <button id="heroBuyBtn" class="btn-primary">Add Jet to Hangar</button>
+        <button id="scrollSpecsBtn" class="btn-ghost">View Specs ↓</button>
+      </div>
+
+      <div class="hero-trust">
+        Over 12,500+ happy pilots • Kid & adult friendly
+      </div>
+    </div>
+
+    <!-- RIGHT PRODUCT DISPLAY -->
+    <div class="hero-display">
+      <div class="hero-display-inner">
+
+        <div class="hero-tag">
+          Model <span>NX-91</span>
+        </div>
+
+        <div class="hero-price-chip">
+          <strong>$39.99</strong>
+          <small>Today only</small>
+        </div>
+
+        <img id="heroJetImage" src="jet-hero.jpg" class="hero-jet-img" />
+
+        <div class="hero-hud">
+          <strong>Stabilized Flight Mode Active</strong><br>
+          Auto height-hold • Anti-crash foam shell
+        </div>
+
+      </div>
+
+      <!-- THUMBS -->
+      <div class="hero-thumb-strip">
+        <button class="thumb active" data-img="jet-hero.jpg"><img src="jet-hero.jpg"></button>
+        <button class="thumb" data-img="jet-top.jpg"><img src="jet-top.jpg"></button>
+        <button class="thumb" data-img="jet-night.jpg"><img src="jet-night.jpg"></button>
+      </div>
     </div>
   </section>
 
-  <!-- MINI CART DRAWER -->
-  <aside class="cart-drawer" id="cartDrawer">
-    <h3>Hangar</h3>
-    <p id="cartMiniLabel" class="muted"></p>
-
-    <div class="cart-line">
-      <span>Qty:</span><span id="cartQty"></span>
+  <!-- ============================= -->
+  <!-- STATS SECTION -->
+  <!-- ============================= -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Why Pilots Love NoveJet</h2>
+      <div class="section-kicker">Engineered for performance</div>
     </div>
 
-    <div class="cart-line">
-      <span>Subtotal:</span><span>$<span id="cartSubtotal">0.00</span></span>
+    <div class="stat-row">
+      <div class="stat-pill"><strong>120+</strong> ft range</div>
+      <div class="stat-pill"><strong>18</strong> min flight</div>
+      <div class="stat-pill"><strong>45 mph</strong> top speed</div>
+      <div class="stat-pill"><strong>Crash-Safe</strong> body</div>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- FEATURES -->
+  <!-- ============================= -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Key Features</h2>
+      <div class="section-kicker">Built for beginners → loved by pros</div>
     </div>
 
-    <div class="cart-line">
-      <span>Total:</span><span>$<span id="cartTotal">0.00</span></span>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-label">Stabilization</div>
+        <h4>Auto Height-Hold</h4>
+        <p>Perfectly stable even for first-time flyers.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-label">Durability</div>
+        <h4>Crash-Resistant Foam</h4>
+        <p>Safe, flexible, and impact-absorbing design.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-label">Battery</div>
+        <h4>Long-Lasting Power</h4>
+        <p>18-minute continuous flight per charge.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-label">Control</div>
+        <h4>Beginner Mode</h4>
+        <p>Easy controls, smooth turns, steady flight.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- REVIEWS -->
+  <!-- ============================= -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Customer Reviews</h2>
+      <div class="section-kicker">Real pilots. Real fun.</div>
     </div>
 
-    <button id="cartCheckoutBtn" class="cta-secondary">View Cart & Checkout</button>
-  </aside>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="stars">★★★★★</div>
+          <div class="review-meta">Alex • USA</div>
+        </div>
+        “This jet is INSANE. The stabilization is magic. Buy it.”
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="stars">★★★★★</div>
+          <div class="review-meta">Maya • UK</div>
+        </div>
+        “I bought it for my son… but I fly it more than he does.”
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="stars">★★★★★</div>
+          <div class="review-meta">Chris • AU</div>
+        </div>
+        “Crashed 3 times. Zero damage. 10/10 durability.”
+      </div>
+    </div>
+  </section>
 
 </main>
 
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
 <footer>
   <div class="footer-inner">
     <div>© <span id="year"></span> NoveJet.</div>
@@ -74,18 +196,38 @@
   </div>
 </footer>
 
-<!-- ========================= -->
-<!-- FINAL WORKING JAVASCRIPT -->
-<!-- ========================= -->
+<!-- ============================= -->
+<!-- CART MINI PANEL -->
+<!-- ============================= -->
+<aside class="cart-drawer" id="cartDrawer">
+  <h3>Hangar</h3>
+  <p id="cartMiniLabel" class="muted"></p>
+
+  <div class="cart-line">
+    <span>Qty:</span><span id="cartQty"></span>
+  </div>
+
+  <div class="cart-line">
+    <span>Subtotal:</span><span>$<span id="cartSubtotal">0.00</span></span>
+  </div>
+
+  <div class="cart-line">
+    <span>Total:</span><span>$<span id="cartTotal">0.00</span></span>
+  </div>
+
+  <button id="cartCheckoutBtn">View Cart & Checkout</button>
+</aside>
+
+<!-- ============================= -->
+<!-- JAVASCRIPT -->
+<!-- ============================= -->
 <script>
 const PRODUCT_PRICE = 39.99;
 const TAX_RATE = 0.0968;
 const CART_KEY = "novejet_cart";
 
-// Retrieve existing cart
 let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
 
-// DOM elements
 const navCartBtn = document.getElementById("navCartBtn");
 const navCartCount = document.getElementById("navCartCount");
 const navBuyBtn = document.getElementById("navBuyBtn");
@@ -98,17 +240,12 @@ const cartTotalSpan = document.getElementById("cartTotal");
 const cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
 const yearSpan = document.getElementById("year");
 const heroJetImage = document.getElementById("heroJetImage");
-
-// Set year
 yearSpan.textContent = new Date().getFullYear();
 
-function saveCart() {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
+function saveCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
 
 function updateCartUI() {
   const qty = cart.qty || 0;
-
   if (qty <= 0) {
     navCartCount.style.display = "none";
     cartMiniLabel.textContent = "No jets yet";
@@ -118,19 +255,16 @@ function updateCartUI() {
     return;
   }
 
-  // Show badge
-  navCartCount.style.display = "inline-block";
+  navCartCount.style.display = "inline-flex";
   navCartCount.textContent = qty;
 
   cartQtySpan.textContent = qty;
-
   const subtotal = PRODUCT_PRICE * qty;
   const tax = subtotal * TAX_RATE;
   const total = subtotal + tax;
 
   cartSubtotalSpan.textContent = subtotal.toFixed(2);
   cartTotalSpan.textContent = total.toFixed(2);
-
   cartMiniLabel.textContent = qty + " jet" + (qty > 1 ? "s" : "") + " ready";
 }
 
@@ -138,15 +272,13 @@ function addJet() {
   cart.qty = (cart.qty || 0) + 1;
   saveCart();
   updateCartUI();
-
-  heroBuyBtn.textContent = "Added ✔";
-  setTimeout(() => heroBuyBtn.textContent = "Add Jet to Hangar", 1200);
 }
 
-// ===============
-// EVENT HANDLERS
-// ===============
-heroBuyBtn.addEventListener("click", addJet);
+heroBuyBtn.addEventListener("click", () => {
+  addJet();
+  heroBuyBtn.textContent = "Added ✔";
+  setTimeout(() => heroBuyBtn.textContent = "Add Jet to Hangar", 1200);
+});
 
 navBuyBtn.addEventListener("click", () => {
   addJet();
@@ -161,7 +293,7 @@ cartCheckoutBtn.addEventListener("click", () => {
   window.location.href = "cart.html";
 });
 
-// Thumbnails
+// Thumbnail switching
 document.querySelectorAll(".thumb").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".thumb").forEach(t => t.classList.remove("active"));
@@ -170,7 +302,6 @@ document.querySelectorAll(".thumb").forEach(btn => {
   });
 });
 
-// Initialize cart
 updateCartUI();
 </script>
 
