@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NoveJet RC Jet | Beginner-Friendly Fighter Jet Toy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020311;
+      --bg-alt: #070818;
+      --accent: #4af2ff;
+      --accent-soft: rgba(74, 242, 255, 0.16);
+      --accent2: #ff5cf7;
+      --text: #f7f7ff;
+      --muted: #b5b8d4;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.55);
+      --max-width: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 0 0, #1d1f4a 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, #381234 0, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(2, 3, 17, 0.98),
+        rgba(2, 3, 17, 0.8),
+        transparent
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-orb {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from 130deg,
+        #4af2ff,
+        #ff5cf7,
+        #ffe45c,
+        #4af2ff
+      );
+      padding: 2px;
+      box-shadow: 0 0 20px rgba(74, 242, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-orb-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: #050512;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-cart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.25rem 0.7rem;
+      background: rgba(2, 3, 17, 0.7);
+      cursor: pointer;
+    }
+
+    .nav-cart-count {
+      min-width: 18px;
+      height: 18px;
+      font-size: 0.72rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .btn-pill {
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: radial-gradient(circle at 0 0, #4af2ff 0, #1b9fff 40%, #1e1b3a 100%);
+      color: #020311;
+      box-shadow: 0 0 20px rgba(74, 242, 255, 0.45);
+    }
+
+    .btn-pill span.icon { font-size: 1.1rem; }
+
+    main { flex: 1; }
+
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.7rem 1.1rem 3.3rem;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 2.1rem;
+      align-items: center;
+      margin-top: 0.7rem;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.1rem);
+      line-height: 1.05;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(120deg, #4af2ff, #ff5cf7, #ffe45c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 32rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+      font-size: 0.8rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(7, 8, 24, 0.9);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .pill strong { color: var(--accent); }
+
+    .pill-hot {
+      border-color: rgba(255, 92, 247, 0.6);
+      background: rgba(255, 92, 247, 0.12);
+      color: #ffdfff;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: linear-gradient(120deg, #4af2ff, #1b9fff);
+      color: #020311;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.7rem 1.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(7, 8, 24, 0.9);
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-trust {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* DISPLAY */
+    .hero-display {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 0 0, rgba(74, 242, 255, 0.15) 0, transparent 45%),
+        radial-gradient(circle at 100% 100%, rgba(255, 92, 247, 0.18) 0, transparent 55%),
+        linear-gradient(145deg, #050617, #0a0b22);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .hero-display-inner {
+      border-radius: calc(var(--radius-xl) - 6px);
+      background: radial-gradient(circle at 20% 0, #4af2ff33 0, transparent 45%),
+        radial-gradient(circle at 80% 100%, #ff5cf722 0, transparent 45%),
+        #070819;
+      padding: 0.9rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .hero-tag {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(2, 3, 17, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-tag span { color: var(--accent); }
+
+    .hero-price-chip {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(74, 242, 255, 0.7);
+      text-align: right;
+    }
+
+    .hero-price-chip strong {
+      font-size: 1.05rem;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-price-chip small {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .hero-jet-img {
+      position: absolute;
+      right: -10%;
+      top: 12%;
+      width: 320px;
+      max-width: 70%;
+      filter: drop-shadow(0 18px 35px rgba(0, 0, 0, 0.7));
+      transform: rotate(-4deg);
+    }
+
+    .hero-hud {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(2, 3, 17, 0.9);
+      border-radius: 12px;
+      padding: 0.5rem 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 14rem;
+    }
+
+    .hero-hud strong { color: var(--accent); font-size: 0.82rem; }
+
+    .hero-thumb-strip {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 11px;
+      overflow: hidden;
+      border: 1px solid transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      background: #050617;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(74, 242, 255, 0.6);
+    }
+
+    /* SECTION / FEATURES / REVIEWS (same as before, trimmed a bit) */
+    .section { margin-top: 2.8rem; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title { font-size: 1.2rem; }
+
+    .section-kicker { font-size: 0.82rem; color: var(--muted); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(6, 7, 22, 0.96);
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+    }
+
+    .feature-label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-card h4 { margin-bottom: 0.2rem; font-size: 0.95rem; }
+
+    .feature-card p { color: var(--muted); }
+
+    .stat-row {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      font-size: 0.86rem;
+      margin-top: 0.7rem;
+    }
+
+    .stat-pill {
+      border-radius: 999px;
+      padding: 0.3rem 0.75rem;
+      background: rgba(6, 7, 22, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: baseline;
+    }
+
+    .stat-pill strong { color: var(--accent); font-size: 0.95rem; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .review-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(7, 8, 26, 0.96);
+      padding: 0.85rem 1rem;
+      font-size: 0.86rem;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .stars { color: #ffd66b; font-size: 0.9rem; }
+
+    .review-meta { font-size: 0.74rem; color: var(--muted); }
+
+    .faq-item {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(6, 7, 22, 0.98);
+      padding: 0.8rem 0.9rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.86rem;
+    }
+
+    .faq-q { font-weight: 500; margin-bottom: 0.15rem; }
+    .faq-a { color: var(--muted); }
+
+    /* CART MINI PANEL */
+    .cart-drawer {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 260px;
+      border-radius: 18px;
+      background: rgba(3, 4, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      padding: 0.85rem 0.9rem;
+      font-size: 0.84rem;
+      backdrop-filter: blur(16px);
+    }
+
+    .cart-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .cart-drawer-title { font-size: 0.9rem; font-weight: 500; }
+
+    .cart-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.18rem 0;
+    }
+
+    .cart-total {
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      margin-top: 0.35rem;
+      padding-top: 0.35rem;
+    }
+
+    .cart-total strong { color: var(--accent); }
+
+    .cart-mini-note {
+      margin-top: 0.3rem;
+      color: var(--muted);
+      font-size: 0.74rem;
+    }
+
+    .cart-drawer button {
+      margin-top: 0.4rem;
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.5rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: linear-gradient(120deg, var(--accent2), #ff9acb);
+      color: #020311;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 1.3rem 1.1rem 1.9rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 940px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .hero-display-inner { min-height: 240px; }
+      .hero-jet-img {
+        position: static;
+        display: block;
+        margin: 0 auto;
+        transform: none;
+        max-width: 85%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .wrap { padding-bottom: 2.4rem; }
+      .cart-drawer {
+        left: 14px;
+        right: 14px;
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-orb">
+          <div class="logo-orb-inner">NJ</div>
+        </div>
+        <div class="brand">NoveJet</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#top">Overview</a>
+        <a href="#specs">Specs</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-right">
+        <button class="nav-cart-btn" type="button" id="navCartBtn">
+          Cart
+          <span class="nav-cart-count" id="navCartCount">0</span>
+        </button>
+        <button class="btn-pill" type="button" id="navBuyBtn">
+          <span class="icon">✈️</span>
+          Launch Jet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <!-- HERO -->
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Rechargeable · Indoor & Outdoor · Beginner Friendly</div>
+          <h1 class="hero-title">
+            Turn any park into a <span class="hero-gradient">runway.</span>
+          </h1>
+          <p class="hero-sub">
+            Meet the <strong>NoveJet RC Fighter</strong> — a height-hold, crash-resistant foam jet
+            with built-in stabilization. Perfect for first-time pilots and backyard dogfights.
+          </p>
+
+          <div class="hero-meta-row">
+            <span class="pill pill-hot">🔥 35% OFF – Today: <strong>$39.99</strong></span>
+            <span class="pill"><strong>Height hold</strong> keeps you flying, not nose-diving</span>
+            <span class="pill"><strong>Rechargeable</strong> USB battery included</span>
+          </div>
+
+          <div class="hero-cta-row">
+            <button class="btn-primary" id="heroBuyBtn">
+              Add Jet to Hangar
+              <span>→</span>
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('specs').scrollIntoView({behavior:'smooth'});">
+              View flight specs
+            </button>
+          </div>
+
+          <div class="hero-trust">
+            Secure payment via Razorpay · 14-day “first flight” guarantee
+          </div>
+        </div>
+
+        <!-- PRODUCT DISPLAY -->
+        <aside class="hero-display">
+          <div class="hero-display-inner">
+            <div class="hero-tag"><span>New</span> • 2025 Flight Edition</div>
+            <div class="hero-price-chip">
+              <strong>$39.99</strong>
+              <small>after 35% OFF · was $61.52</small>
+            </div>
+
+            <img
+              src="jet-hero.jpg"
+              alt="Black RC jet with glowing lights hovering above a runway"
+              class="hero-jet-img"
+              id="heroJetImage"
+            />
+
+            <div class="hero-hud">
+              <strong>Auto Height Hold</strong><br />
+              Built-in stabilization so you can focus on direction,
+              not crashing. Ideal for indoor gyms or outdoor parks.
+            </div>
+          </div>
+
+          <div class="hero-thumb-strip">
+            <button class="thumb active" data-img="jet-hero.jpg">
+              <img src="jet-hero.jpg" alt="RC jet above glowing runway" />
+            </button>
+            <button class="thumb" data-img="jet-top.jpg">
+              <img src="jet-top.jpg" alt="Top view of RC jet" />
+            </button>
+            <button class="thumb" data-img="jet-night.jpg">
+              <img src="jet-night.jpg" alt="RC jet with LED lights at night" />
+            </button>
+            <button class="thumb" data-img="jet-remote.jpg">
+              <img src="jet-remote.jpg" alt="RC jet remote controller and battery" />
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <!-- SPECS -->
+      <section class="section" id="specs">
+        <div class="section-header">
+          <h2 class="section-title">Flight Specs & Features</h2>
+          <p class="section-kicker">
+            Designed to survive beginner crashes, windy days, and wild imaginations.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-label">Control</div>
+            <h4>Height-hold remote system</h4>
+            <p>
+              Simple 2.4 GHz remote with auto height hold. Take off, steer, and land with
+              fewer stalls and nose dives — even on your first flight.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-label">Build</div>
+            <h4>Durable foam airframe</h4>
+            <p>
+              EPP foam construction absorbs impact and flexes instead of shattering.
+              Bounce off grass, not your heart.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-label">Power</div>
+            <h4>Rechargeable battery pack</h4>
+            <p>
+              USB-rechargeable battery with generous flight time. Swap in seconds and
+              get back in the air without waiting hours.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-label">Experience</div>
+            <h4>Indoor & outdoor capable</h4>
+            <p>
+              Lightweight enough for gymnasiums and large indoor spaces; powerful enough
+              to cut across backyards, fields, and parks.
+            </p>
+          </article>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-pill">
+            <strong>2.4 GHz</strong>
+            <span>anti-interference signal</span>
+          </div>
+          <div class="stat-pill">
+            <strong>Up to 15 min</strong>
+            <span>per charge (conditions vary)</span>
+          </div>
+          <div class="stat-pill">
+            <strong>50–80 m</strong>
+            <span>control distance</span>
+          </div>
+          <div class="stat-pill">
+            <strong>&lt; 200 g</strong>
+            <span>ultra-light airframe</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section class="section" id="reviews">
+        <div class="section-header">
+          <h2 class="section-title">Pilots are reporting in.</h2>
+          <p class="section-kicker">Real flights. Real crashes. Real smiles.</p>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="review-header">
+              <div><strong>Leo M.</strong> · First-time pilot</div>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p>
+              “Took this to the park with my 10-year-old. We were flying confidently
+              in 5 minutes. It survived at least three ‘emergency landings’ on concrete.”
+            </p>
+            <div class="review-meta">Verified purchase</div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-header">
+              <div><strong>Sophia K.</strong> · STEM club coach</div>
+              <div class="stars">★★★★☆</div>
+            </div>
+            <p>
+              “We use these jets for our after-school club. Kids learn the basics of lift,
+              thrust, and control without breaking an expensive model every week.”
+            </p>
+            <div class="review-meta">Used weekly in class</div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-header">
+              <div><strong>Jay & Arjun</strong> · Indoor pilots</div>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p>
+              “Flies great in the school gym. The height hold makes it feel more like a drone
+              and less like the plane you immediately crash into the wall.”
+            </p>
+            <div class="review-meta">Indoor flights · 12+ hours logged</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <div class="section-header">
+          <h2 class="section-title">Questions before takeoff?</h2>
+          <p class="section-kicker">Here’s what new pilots usually ask.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is this jet actually beginner-friendly?</div>
+          <div class="faq-a">
+            Yes. The built-in height hold and stabilization mean the jet helps keep itself
+            level while you focus on turning and throttle. It is ideal as a first RC plane.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Where can I fly it?</div>
+          <div class="faq-a">
+            Any wide-open outdoor space like a park or field, and larger indoor spaces such as
+            gyms or halls. Avoid crowded areas, roads, and airports (seriously).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What comes in the box?</div>
+          <div class="faq-a">
+            You get the NoveJet RC fighter, 2.4 GHz remote controller, rechargeable battery,
+            USB charging cable, and spare propellers — everything you need to fly, just add AA
+            batteries for the remote.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What if my jet arrives damaged or does not work?</div>
+          <div class="faq-a">
+            If your jet arrives defective or damaged in transit, contact us within 14 days with
+            photos or a short video and we will arrange a replacement or refund according to our policy.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- CART MINI PANEL -->
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">Hangar</div>
+      <div style="font-size:0.75rem;color:var(--muted);" id="cartMiniLabel">No jets yet</div>
+    </div>
+    <div class="cart-line">
+      <span>NoveJet RC Fighter × <span id="cartQty">0</span></span>
+      <span>$<span id="cartSubtotal">0.00</span></span>
+    </div>
+    <div class="cart-total">
+      <div class="cart-line">
+        <span>Total</span>
+        <span><strong>$<span id="cartTotal">0.00</span></strong></span>
+      </div>
+    </div>
+    <div class="cart-mini-note">
+      Edit your hangar in the full cart and pay securely with Razorpay.
+    </div>
+    <button type="button" id="cartCheckoutBtn">
+      View cart & checkout
+    </button>
+  </aside>
+
+  <footer>
+  <div class="footer-inner">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms & Conditions</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="shipping.html">Shipping Policy</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  const PRODUCT_PRICE = 39.99;
+  const CART_KEY = "novejet_cart";
+
+  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
+
+  const yearSpan = document.getElementById("year");
+  const navCartCount = document.getElementById("navCartCount");
+  const cartQtySpan = document.getElementById("cartQty");
+  const cartSubtotalSpan = document.getElementById("cartSubtotal");
+  const cartTotalSpan = document.getElementById("cartTotal");
+  const cartMiniLabel = document.getElementById("cartMiniLabel");
+  const heroBuyBtn = document.getElementById("heroBuyBtn");
+  const navBuyBtn = document.getElementById("navBuyBtn");
+  const navCartBtn = document.getElementById("navCartBtn");
+  const cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
+  const heroJetImage = document.getElementById("heroJetImage");
+
+  yearSpan.textContent = new Date().getFullYear();
+
+  function saveCart() {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+
+  function updateCartUI() {
+    const qty = cart.qty || 0;
+    cartQtySpan.textContent = qty;
+    navCartCount.textContent = qty;
+    const subtotal = PRODUCT_PRICE * qty;
+    cartSubtotalSpan.textContent = subtotal.toFixed(2);
+    cartTotalSpan.textContent = subtotal.toFixed(2);
+    cartMiniLabel.textContent = qty === 0 ? "No jets yet" : qty + " jet" + (qty > 1 ? "s" : "") + " ready";
+  }
+
+  function addJetToCart() {
+    cart.qty = (cart.qty || 0) + 1;
+    cart.price = PRODUCT_PRICE;
+    saveCart();
+    updateCartUI();
+    heroBuyBtn.textContent = "Added to hangar ✔";
+    setTimeout(() => heroBuyBtn.textContent = "Add Jet to Hangar", 1300);
+  }
+
+  heroBuyBtn.addEventListener("click", addJetToCart);
+  navBuyBtn.addEventListener("click", function () {
+    addJetToCart();
+    window.location.href = "cart.html";
+  });
+  navCartBtn.addEventListener("click", function () {
+    window.location.href = "cart.html";
+  });
+  cartCheckoutBtn.addEventListener("click", function () {
+    window.location.href = "cart.html";
+  });
+
+  // Thumbnails
+  document.querySelectorAll(".thumb").forEach(thumb => {
+    thumb.addEventListener("click", function () {
+      document.querySelectorAll(".thumb").forEach(t => t.classList.remove("active"));
+      thumb.classList.add("active");
+      const img = thumb.getAttribute("data-img");
+      heroJetImage.src = img;
+    });
+  });
+
+  updateCartUI();
+</script>
+</body>
+</html>

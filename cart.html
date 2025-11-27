@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NoveJet Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #020311;
+      color: #f7f7ff;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 650px;
+      margin: 40px auto;
+      background: #070818;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    h1 { margin-top: 0; margin-bottom: 8px; }
+    .sub { color: #b5b8d4; font-size: 0.9rem; margin-bottom: 18px; }
+    .cart-item {
+      display: flex;
+      gap: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      padding: 14px 0;
+      align-items: center;
+    }
+    .cart-item img {
+      width: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .item-details { flex: 1; font-size: 0.9rem; }
+    .item-details h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .muted { color: #b5b8d4; font-size: 0.85rem; }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .qty-btn {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      background: #13142a;
+      color: #f7f7ff;
+    }
+    .qty-btn:hover { background: #1d1f3d; }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #ff5c7a;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 6px;
+      font-size: 0.8rem;
+    }
+    .totals {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+    .totals div { margin: 4px 0; }
+    .totals strong { font-size: 1.1rem; }
+    .checkout-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: linear-gradient(120deg,#4af2ff,#1b9fff);
+      color: #020311;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.8);
+    }
+    .checkout-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .empty {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 1rem;
+      color: #b5b8d4;
+    }
+    .empty a { color: #4af2ff; text-decoration: underline; }
+    .top-link {
+      font-size: 0.85rem;
+      color: #b5b8d4;
+      margin-bottom: 10px;
+    }
+    .top-link a { color: #4af2ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="top-link"><a href="index.html">← Back to store</a></div>
+  <h1>Your Hangar</h1>
+  <p class="sub">Review your NoveJet and adjust quantity before secure checkout.</p>
+
+  <div id="cartContent"></div>
+
+  <div id="totals" class="totals" style="display:none;">
+    <div>Subtotal: $<span id="subtotal">0.00</span></div>
+    <div><strong>Total: $<span id="total">0.00</span> USD</strong></div>
+    <div class="muted" style="font-size:0.8rem;">Taxes & fees (if any) are shown on your Razorpay receipt.</div>
+  </div>
+
+  <button id="checkoutBtn" class="checkout-btn" style="display:none;">
+    Checkout with Razorpay
+  </button>
+
+  <p id="emptyMsg" class="empty" style="display:none;">
+    Your hangar is empty.<br><br>
+    <a href="index.html">Add a NoveJet to cart</a>
+  </p>
+</div>
+
+<script>
+  const CART_KEY = "novejet_cart";
+  const PRODUCT_PRICE = 39.99;
+
+  const cartContent = document.getElementById("cartContent");
+  const emptyMsg = document.getElementById("emptyMsg");
+  const totalsBox = document.getElementById("totals");
+  const subtotalSpan = document.getElementById("subtotal");
+  const totalSpan = document.getElementById("total");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+
+  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
+
+  function saveCart() {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+
+  function renderCart() {
+    cartContent.innerHTML = "";
+    const qty = cart.qty || 0;
+
+    if (qty <= 0) {
+      emptyMsg.style.display = "block";
+      totalsBox.style.display = "none";
+      checkoutBtn.style.display = "none";
+      return;
+    }
+
+    emptyMsg.style.display = "none";
+    totalsBox.style.display = "block";
+    checkoutBtn.style.display = "block";
+
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "cart-item";
+    itemDiv.innerHTML = `
+      <img src="jet-hero.jpg" alt="NoveJet RC Fighter">
+      <div class="item-details">
+        <h3>NoveJet RC Fighter</h3>
+        <div class="muted">Height-hold · Rechargeable · Crash-resistant foam</div>
+        <div class="muted" style="margin-top:4px;">Price: $${PRODUCT_PRICE.toFixed(2)} USD</div>
+
+        <div class="qty-controls">
+          <button class="qty-btn" id="minusBtn">−</button>
+          <span>${qty}</span>
+          <button class="qty-btn" id="plusBtn">+</button>
+        </div>
+
+        <button class="remove-btn" id="removeBtn">Remove from hangar</button>
+      </div>
+    `;
+    cartContent.appendChild(itemDiv);
+
+    const subtotal = PRODUCT_PRICE * qty;
+    subtotalSpan.textContent = subtotal.toFixed(2);
+    totalSpan.textContent = subtotal.toFixed(2);
+
+    document.getElementById("minusBtn").onclick = () => {
+      if (cart.qty > 1) {
+        cart.qty -= 1;
+      } else {
+        cart.qty = 0;
+      }
+      saveCart();
+      renderCart();
+    };
+
+    document.getElementById("plusBtn").onclick = () => {
+      cart.qty += 1;
+      saveCart();
+      renderCart();
+    };
+
+    document.getElementById("removeBtn").onclick = () => {
+      cart.qty = 0;
+      saveCart();
+      renderCart();
+    };
+  }
+
+  checkoutBtn.onclick = () => {
+    // go to Razorpay checkout page
+    window.location.href = "checkout.html";
+  };
+
+  renderCart();
+</script>
+</body>
+</html>

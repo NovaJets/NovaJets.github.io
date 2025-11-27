@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Complete – NoveJet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #020311;
+      color: #f7f7ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .box {
+      background: #070818;
+      padding: 32px 26px;
+      border-radius: 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.1);
+      width: 360px;
+      text-align: center;
+    }
+    h1 { margin-top: 0; margin-bottom: 10px; }
+    .sub { color: #b5b8d4; font-size: 0.9rem; margin-bottom: 18px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,242,255,0.7);
+      color: #4af2ff;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+    a {
+      color: #4af2ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<div class="box">
+  <div class="badge">Payment received</div>
+  <h1>Thank you, pilot. ✈️</h1>
+  <p class="sub">
+    Your NoveJet RC Fighter order has been placed.<br>
+    We’ll send your flight details and tracking link to your email shortly.
+  </p>
+  <p class="sub" id="paymentLine"></p>
+  <a href="index.html">Back to NoveJet hangar</a>
+</div>
+
+<script>
+  // show payment id if present
+  const params = new URLSearchParams(window.location.search);
+  const paymentId = params.get("payment_id");
+  const line = document.getElementById("paymentLine");
+
+  if (paymentId) {
+    line.textContent = "Payment ID: " + paymentId;
+  }
+</script>
+</body>
+</html>
