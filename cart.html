@@ -51,26 +51,16 @@
 <script>
   const CART_KEY = "novejet_cart";
   const PRODUCT_PRICE = 39.99;
-  
+  const TAX_RATE = 0.0968;
 
   const cartContent = document.getElementById("cartContent");
   const emptyMsg = document.getElementById("emptyMsg");
   const totalsBox = document.getElementById("totals");
   const subtotalSpan = document.getElementById("subtotal");
+  const taxSpan = document.getElementById("tax");
   const totalSpan = document.getElementById("total");
   const checkoutBtn = document.getElementById("checkoutBtn");
   const yearSpan = document.getElementById("year");
-
-  const TAX_RATE = 0.0968;
-
-const subtotal = PRODUCT_PRICE * qty;
-const taxAmount = subtotal * TAX_RATE;
-const total = subtotal + taxAmount;
-
-subtotalSpan.textContent = subtotal.toFixed(2);
-document.getElementById("tax").textContent = taxAmount.toFixed(2);
-totalSpan.textContent = total.toFixed(2);
-
 
   yearSpan.textContent = new Date().getFullYear();
 
@@ -116,8 +106,12 @@ totalSpan.textContent = total.toFixed(2);
     cartContent.appendChild(itemDiv);
 
     const subtotal = PRODUCT_PRICE * qty;
+    const taxAmount = subtotal * TAX_RATE;
+    const total = subtotal + taxAmount;
+
     subtotalSpan.textContent = subtotal.toFixed(2);
-    totalSpan.textContent = subtotal.toFixed(2);
+    taxSpan.textContent = taxAmount.toFixed(2);
+    totalSpan.textContent = total.toFixed(2);
 
     document.getElementById("minusBtn").onclick = () => {
       if (cart.qty > 1) {
@@ -148,7 +142,9 @@ totalSpan.textContent = total.toFixed(2);
 
   renderCart();
 </script>
+
 </body>
 </html>
+
 
 
