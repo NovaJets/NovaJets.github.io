@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="simple-page">
   <div class="simple-container">
     <div class="simple-top-link"><a href="index.html">← Back to store</a></div>
@@ -16,14 +17,10 @@
     <div id="cartContent"></div>
 
     <div id="totals" class="totals" style="display:none;">
-  <div>Subtotal: $<span id="subtotal">0.00</span></div>
-  <div>Tax (9.68%): $<span id="tax">0.00</span></div>
-  <div><strong>Total: $<span id="total">0.00</span> USD</strong></div>
-  <div class="muted" style="font-size:0.8rem;">
-    Taxes are calculated based on your region (9.68%).
-  </div>
-</div>
-
+      <div>Subtotal: $<span id="subtotal">0.00</span></div>
+      <div>Tax (9.68%): $<span id="tax">0.00</span></div>
+      <div><strong>Total: $<span id="total">0.00</span> USD</strong></div>
+    </div>
 
     <button id="checkoutBtn" class="simple-btn-primary checkout-btn" style="display:none;">
       Checkout with Razorpay
@@ -49,102 +46,97 @@
 </footer>
 
 <script>
-  const CART_KEY = "novejet_cart";
-  const PRODUCT_PRICE = 39.99;
-  const TAX_RATE = 0.0968;
+const CART_KEY = "novejet_cart";
+const PRODUCT_PRICE = 39.99;
+const TAX_RATE = 0.0968;
 
-  const cartContent = document.getElementById("cartContent");
-  const emptyMsg = document.getElementById("emptyMsg");
-  const totalsBox = document.getElementById("totals");
-  const subtotalSpan = document.getElementById("subtotal");
-  const taxSpan = document.getElementById("tax");
-  const totalSpan = document.getElementById("total");
-  const checkoutBtn = document.getElementById("checkoutBtn");
-  const yearSpan = document.getElementById("year");
+const cartContent = document.getElementById("cartContent");
+const emptyMsg = document.getElementById("emptyMsg");
+const totalsBox = document.getElementById("totals");
+const subtotalSpan = document.getElementById("subtotal");
+const taxSpan = document.getElementById("tax");
+const totalSpan = document.getElementById("total");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const yearSpan = document.getElementById("year");
 
-  yearSpan.textContent = new Date().getFullYear();
+yearSpan.textContent = new Date().getFullYear();
 
-  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
+let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
 
-  function saveCart() {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+function saveCart() {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+function renderCart() {
+
+  const qty = cart.qty || 0;
+
+  cartContent.innerHTML = "";
+  
+  if (qty <= 0) {
+    emptyMsg.style.display = "block";
+    totalsBox.style.display = "none";
+    checkoutBtn.style.display = "none";
+    return;
   }
 
-  function renderCart() {
-    cartContent.innerHTML = "";
-    const qty = cart.qty || 0;
+  emptyMsg.style.display = "none";
+  totalsBox.style.display = "block";
+  checkoutBtn.style.display = "block";
 
-    if (qty <= 0) {
-      emptyMsg.style.display = "block";
-      totalsBox.style.display = "none";
-      checkoutBtn.style.display = "none";
-      return;
-    }
+  const itemDiv = document.createElement("div");
+  itemDiv.className = "cart-item";
+  itemDiv.innerHTML = `
+    <img src="jet-hero.jpg" alt="NoveJet RC Fighter">
+    <div class="item-details">
+      <h3>NoveJet RC Fighter</h3>
+      <div class="muted">Height-hold · Rechargeable · Crash resistant</div>
+      <div class="muted" style="margin-top:4px;">Price: $${PRODUCT_PRICE.toFixed(2)} USD</div>
 
-    emptyMsg.style.display = "none";
-    totalsBox.style.display = "block";
-    checkoutBtn.style.display = "block";
-
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "cart-item";
-    itemDiv.innerHTML = `
-      <img src="jet-hero.jpg" alt="NoveJet RC Fighter">
-      <div class="item-details">
-        <h3>NoveJet RC Fighter</h3>
-        <div class="muted">4-engine turbofan · Height-hold · Rechargeable</div>
-        <div class="muted" style="margin-top:4px;">Price: $${PRODUCT_PRICE.toFixed(2)} USD</div>
-
-        <div class="qty-controls">
-          <button class="qty-btn" id="minusBtn">−</button>
-          <span>${qty}</span>
-          <button class="qty-btn" id="plusBtn">+</button>
-        </div>
-
-        <button class="remove-btn" id="removeBtn">Remove from hangar</button>
+      <div class="qty-controls">
+        <button class="qty-btn" id="minusBtn">−</button>
+        <span>${qty}</span>
+        <button class="qty-btn" id="plusBtn">+</button>
       </div>
-    `;
-    cartContent.appendChild(itemDiv);
 
-    const subtotal = PRODUCT_PRICE * qty;
-    const taxAmount = subtotal * TAX_RATE;
-    const total = subtotal + taxAmount;
+      <button class="remove-btn" id="removeBtn">Remove</button>
+    </div>
+  `;
+  cartContent.appendChild(itemDiv);
 
-    subtotalSpan.textContent = subtotal.toFixed(2);
-    taxSpan.textContent = taxAmount.toFixed(2);
-    totalSpan.textContent = total.toFixed(2);
+  const subtotal = PRODUCT_PRICE * qty;
+  const taxAmount = subtotal * TAX_RATE;
+  const total = subtotal + taxAmount;
 
-    document.getElementById("minusBtn").onclick = () => {
-      if (cart.qty > 1) {
-        cart.qty -= 1;
-      } else {
-        cart.qty = 0;
-      }
-      saveCart();
-      renderCart();
-    };
+  subtotalSpan.textContent = subtotal.toFixed(2);
+  taxSpan.textContent = taxAmount.toFixed(2);
+  totalSpan.textContent = total.toFixed(2);
 
-    document.getElementById("plusBtn").onclick = () => {
-      cart.qty += 1;
-      saveCart();
-      renderCart();
-    };
-
-    document.getElementById("removeBtn").onclick = () => {
-      cart.qty = 0;
-      saveCart();
-      renderCart();
-    };
-  }
-
-  checkoutBtn.onclick = () => {
-    window.location.href = "checkout.html";
+  document.getElementById("minusBtn").onclick = () => {
+    cart.qty = Math.max(0, cart.qty - 1);
+    saveCart();
+    renderCart();
   };
 
-  renderCart();
+  document.getElementById("plusBtn").onclick = () => {
+    cart.qty += 1;
+    saveCart();
+    renderCart();
+  };
+
+  document.getElementById("removeBtn").onclick = () => {
+    cart.qty = 0;
+    saveCart();
+    renderCart();
+  };
+}
+
+checkoutBtn.onclick = () => {
+  window.location.href = "checkout.html";
+};
+
+renderCart();
 </script>
 
 </body>
 </html>
-
-
-
