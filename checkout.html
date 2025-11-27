@@ -12,16 +12,57 @@
 <div class="simple-page">
   <div class="simple-container">
     <h1>Checkout</h1>
-    <p class="simple-sub">Secure payment with Razorpay</p>
+    <p class="simple-sub">Enter your shipping details to complete your order.</p>
 
-    <div id="orderSummary"></div>
+    <!-- ======================== -->
+    <!-- SHIPPING FORM -->
+    <!-- ======================== -->
+    <form id="shippingForm" class="checkout-form">
+
+      <label>Full Name *</label>
+      <input type="text" id="fullName" required>
+
+      <label>Email *</label>
+      <input type="email" id="email" required>
+
+      <label>Phone Number *</label>
+      <input type="tel" id="phone" required>
+
+      <label>Address Line 1 *</label>
+      <input type="text" id="address1" required>
+
+      <label>Address Line 2 (optional)</label>
+      <input type="text" id="address2">
+
+      <label>City *</label>
+      <input type="text" id="city" required>
+
+      <label>State / Province *</label>
+      <input type="text" id="state" required>
+
+      <label>ZIP / Postal Code *</label>
+      <input type="text" id="zip" required>
+
+      <label>Country *</label>
+      <input type="text" id="country" required>
+
+    </form>
+
+    <!-- ORDER SUMMARY -->
+    <h2 style="margin-top:25px;">Order Summary</h2>
+    <div id="orderSummary" class="summary"></div>
 
     <div class="amount">
       Total: <strong>$<span id="totalAmount">0.00</span> USD</strong>
     </div>
 
-    <button id="payBtn" class="simple-btn-primary">Pay with Razorpay</button>
-    <p class="simple-sub" style="font-size:0.8rem;"><a href="cart.html">Back to cart</a></p>
+    <button id="payBtn" class="simple-btn-primary" style="margin-top:15px;">
+      Pay with Razorpay
+    </button>
+
+    <p class="simple-sub" style="font-size:0.8rem;margin-top:1rem;">
+      <a href="cart.html">← Back to cart</a>
+    </p>
   </div>
 </div>
 
@@ -31,6 +72,7 @@
   </div>
 </footer>
 
+<!-- Razorpay Script -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
@@ -42,42 +84,90 @@ const summaryDiv = document.getElementById("orderSummary");
 const totalAmountSpan = document.getElementById("totalAmount");
 const payBtn = document.getElementById("payBtn");
 const yearSpan = document.getElementById("year");
-
 yearSpan.textContent = new Date().getFullYear();
 
+// Load cart
 let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
 const qty = cart.qty || 0;
 
-if (qty <= 0) {
-  window.location.href = "cart.html";
-}
+if (qty <= 0) { window.location.href = "cart.html"; }
 
+// Calculate totals
 const subtotal = PRODUCT_PRICE * qty;
 const taxAmount = subtotal * TAX_RATE;
 const total = subtotal + taxAmount;
-
 totalAmountSpan.textContent = total.toFixed(2);
 
+// Display summary
 summaryDiv.innerHTML = `
   <div><strong>Item:</strong> NoveJet RC Fighter</div>
-  <div><strong>Qty:</strong> ${qty}</div>
+  <div><strong>Quantity:</strong> ${qty}</div>
   <div><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</div>
   <div><strong>Tax (9.68%):</strong> $${taxAmount.toFixed(2)}</div>
   <div><strong>Total:</strong> $${total.toFixed(2)} USD</div>
 `;
 
+// Get form values
+function getShippingData() {
+  return {
+    fullName: document.getElementById("fullName").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    address1: document.getElementById("address1").value.trim(),
+    address2: document.getElementById("address2").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    state: document.getElementById("state").value.trim(),
+    zip: document.getElementById("zip").value.trim(),
+    country: document.getElementById("country").value.trim(),
+  };
+}
+
+// Validate shipping form
+function validateShipping() {
+  const requiredIds = ["fullName", "email", "phone", "address1", "city", "state", "zip", "country"];
+
+  for (let id of requiredIds) {
+    if (document.getElementById(id).value.trim() === "") {
+      alert("Please fill out all required fields.");
+      return false;
+    }
+  }
+  return true;
+}
+
+// Pay button
 payBtn.onclick = function () {
+  if (!validateShipping()) return;
+
+  // Save shipping to localStorage for success page
+  const shippingData = getShippingData();
+  localStorage.setItem("novejet_shipping", JSON.stringify(shippingData));
+
   const amountInCents = Math.round(total * 100);
 
   const options = {
-    key: "rzp_test_YOURKEYHERE",
+    key: "rzp_test_YOUR_KEY_HERE", // Replace with your Razorpay key
     amount: amountInCents,
     currency: "USD",
     name: "NoveJet",
     description: "NoveJet RC Fighter",
+    prefill: {
+      name: shippingData.fullName,
+      email: shippingData.email,
+      contact: shippingData.phone
+    },
+    notes: {
+      address: shippingData.address1 + " " + shippingData.address2 + ", " +
+               shippingData.city + ", " +
+               shippingData.state + " " + shippingData.zip + ", " +
+               shippingData.country,
+      quantity: qty
+    },
     handler: function (response) {
-      window.location.href = "success.html?pid=" + response.razorpay_payment_id;
-    }
+      window.location.href =
+        "success.html?payment_id=" + encodeURIComponent(response.razorpay_payment_id);
+    },
+    theme: { color: "#1b9fff" }
   };
 
   new Razorpay(options).open();
