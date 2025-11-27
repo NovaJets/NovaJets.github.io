@@ -44,11 +44,19 @@
 <script>
   const CART_KEY = "novejet_cart";
   const PRODUCT_PRICE = 39.99;
+  const TAX_RATE = 0.0968;
+
 
   const summaryDiv = document.getElementById("orderSummary");
   const totalAmountSpan = document.getElementById("totalAmount");
   const payBtn = document.getElementById("payBtn");
   const yearSpan = document.getElementById("year");
+  const subtotal = PRODUCT_PRICE * qty;
+const taxAmount = subtotal * TAX_RATE;
+const total = subtotal + taxAmount;
+
+totalAmountSpan.textContent = total.toFixed(2);
+
   yearSpan.textContent = new Date().getFullYear();
 
   let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
@@ -111,3 +119,4 @@
 </script>
 </body>
 </html>
+
