@@ -6,120 +6,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <div class="simple-page">
   <div class="simple-container">
     <h1>Checkout</h1>
-    <p class="simple-sub">
-      Complete your NoveJet order with secure payment via Razorpay.
-    </p>
+    <p class="simple-sub">Secure payment with Razorpay</p>
 
-    <div id="orderSummary" class="summary"></div>
+    <div id="orderSummary"></div>
+
     <div class="amount">
       Total: <strong>$<span id="totalAmount">0.00</span> USD</strong>
     </div>
 
-    <button id="payBtn" class="simple-btn-primary">
-      Pay with Razorpay
-    </button>
-    <p class="simple-sub" style="font-size:0.8rem;margin-top:0.7rem;">
-      Changed your mind? <a href="cart.html">Go back to cart</a>
-    </p>
+    <button id="payBtn" class="simple-btn-primary">Pay with Razorpay</button>
+    <p class="simple-sub" style="font-size:0.8rem;"><a href="cart.html">Back to cart</a></p>
   </div>
 </div>
 
 <footer>
   <div class="footer-inner">
-    <div>© <span id="year"></span> NoveJet.</div>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="shipping.html">Shipping</a>
-      <a href="refund.html">Refunds</a>
-    </div>
+    © <span id="year"></span> NoveJet.
   </div>
 </footer>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
-  const CART_KEY = "novejet_cart";
-  const PRODUCT_PRICE = 39.99;
-  const TAX_RATE = 0.0968;
+const CART_KEY = "novejet_cart";
+const PRODUCT_PRICE = 39.99;
+const TAX_RATE = 0.0968;
 
-  const summaryDiv = document.getElementById("orderSummary");
-  const totalAmountSpan = document.getElementById("totalAmount");
-  const payBtn = document.getElementById("payBtn");
-  const yearSpan = document.getElementById("year");
+const summaryDiv = document.getElementById("orderSummary");
+const totalAmountSpan = document.getElementById("totalAmount");
+const payBtn = document.getElementById("payBtn");
+const yearSpan = document.getElementById("year");
 
-  yearSpan.textContent = new Date().getFullYear();
+yearSpan.textContent = new Date().getFullYear();
 
-  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
-  const qty = cart.qty || 0;
+let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
+const qty = cart.qty || 0;
 
-  // If somehow no items, send back to cart
-  if (qty <= 0) {
-    window.location.href = "cart.html";
-  }
+if (qty <= 0) {
+  window.location.href = "cart.html";
+}
 
-  const subtotal = PRODUCT_PRICE * qty;
-  const taxAmount = subtotal * TAX_RATE;
-  const total = subtotal + taxAmount;
+const subtotal = PRODUCT_PRICE * qty;
+const taxAmount = subtotal * TAX_RATE;
+const total = subtotal + taxAmount;
 
-  totalAmountSpan.textContent = total.toFixed(2);
+totalAmountSpan.textContent = total.toFixed(2);
 
-  summaryDiv.className = "summary";
-  summaryDiv.style.textAlign = "left";
-  summaryDiv.style.fontSize = "0.9rem";
-  summaryDiv.style.marginBottom = "14px";
-  summaryDiv.style.background = "#050615";
-  summaryDiv.style.padding = "10px 12px";
-  summaryDiv.style.borderRadius = "10px";
-  summaryDiv.style.border = "1px solid rgba(255,255,255,0.08)";
-  summaryDiv.innerHTML = `
-    <div><strong>Item:</strong> NoveJet RC Fighter</div>
-    <div><strong>Quantity:</strong> ${qty}</div>
-    <div><strong>Unit price:</strong> $${PRODUCT_PRICE.toFixed(2)} USD</div>
-    <div><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</div>
-    <div><strong>Tax (9.68%):</strong> $${taxAmount.toFixed(2)}</div>
-    <div><strong>Total:</strong> $${total.toFixed(2)} USD</div>
-    <div><strong>Discount:</strong> 35% already applied</div>
-  `;
+summaryDiv.innerHTML = `
+  <div><strong>Item:</strong> NoveJet RC Fighter</div>
+  <div><strong>Qty:</strong> ${qty}</div>
+  <div><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</div>
+  <div><strong>Tax (9.68%):</strong> $${taxAmount.toFixed(2)}</div>
+  <div><strong>Total:</strong> $${total.toFixed(2)} USD</div>
+`;
 
-  payBtn.onclick = function () {
-    const amountInCents = Math.round(total * 100); // smallest unit for USD
+payBtn.onclick = function () {
+  const amountInCents = Math.round(total * 100);
 
-    const options = {
-      key: "rzp_test_YOUR_KEY_ID_HERE", // 🔴 REPLACE with your Razorpay Key ID
-      amount: amountInCents,
-      currency: "USD",
-      name: "NoveJet",
-      description: "NoveJet RC Fighter order",
-      // image: "https://yourdomain.com/logo.png", // optional
-      // order_id: "order_XXXX", // optional if you create orders on backend
-      prefill: {
-        name: "",
-        email: "",
-        contact: ""
-      },
-      notes: {
-        product: "NoveJet RC Fighter",
-        quantity: String(qty)
-      },
-      theme: {
-        color: "#1b9fff"
-      },
-      handler: function (response) {
-        const url = "success.html?payment_id=" + encodeURIComponent(response.razorpay_payment_id);
-        window.location.href = url;
-      }
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
+  const options = {
+    key: "rzp_test_YOURKEYHERE",
+    amount: amountInCents,
+    currency: "USD",
+    name: "NoveJet",
+    description: "NoveJet RC Fighter",
+    handler: function (response) {
+      window.location.href = "success.html?pid=" + response.razorpay_payment_id;
+    }
   };
+
+  new Razorpay(options).open();
+};
 </script>
 
 </body>
 </html>
-
-
