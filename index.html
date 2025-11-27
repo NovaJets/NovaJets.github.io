@@ -310,104 +310,94 @@
 </div>
 
 <script>
-  const PRODUCT_PRICE = 39.99;
-  const TAX_RATE = 0.0968;
-  const CART_KEY = "novejet_cart";
+const PRODUCT_PRICE = 39.99;
+const TAX_RATE = 0.0968;
+const CART_KEY = "novejet_cart";
 
-  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
+// restore cart
+let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
 
-  const yearSpan = document.getElementById("year");
-  const navCartCount = document.getElementById("navCartCount");
-  const cartQtySpan = document.getElementById("cartQty");
-  const cartSubtotalSpan = document.getElementById("cartSubtotal");
-  const cartTotalSpan = document.getElementById("cartTotal");
-  const cartMiniLabel = document.getElementById("cartMiniLabel");
-  const heroBuyBtn = document.getElementById("heroBuyBtn");
-  const navBuyBtn = document.getElementById("navBuyBtn");
-  const navCartBtn = document.getElementById("navCartBtn");
-  const cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
-  const heroJetImage = document.getElementById("heroJetImage");
-  const mobileAddBtn = document.getElementById("mobileAddBtn");
+// UI references
+const navCartCount = document.getElementById("navCartCount");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartQtySpan = document.getElementById("cartQty");
+const cartSubtotalSpan = document.getElementById("cartSubtotal");
+const cartTotalSpan = document.getElementById("cartTotal");
+const cartMiniLabel = document.getElementById("cartMiniLabel");
 
-  yearSpan.textContent = new Date().getFullYear();
+const heroBuyBtn = document.getElementById("heroBuyBtn");
+const launchBtn = document.getElementById("navBuyBtn");
+const navCartBtn = document.getElementById("navCartBtn");
+const cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
 
-  function saveCart() {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  }
+// SAVE CART
+function saveCart() {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
 
-  function updateCartUI() {
-    const qty = cart.qty || 0;
-    navCartCount.textContent = qty;
-    cartQtySpan.textContent = qty;
+// UPDATE MINI-CART
+function updateCartUI() {
+  const qty = cart.qty || 0;
+  navCartCount.textContent = qty;
+  cartQtySpan.textContent = qty;
 
-    const subtotal = PRODUCT_PRICE * qty;
-    const taxAmount = subtotal * TAX_RATE;
-    const total = subtotal + taxAmount;
+  const subtotal = PRODUCT_PRICE * qty;
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax;
 
-    cartSubtotalSpan.textContent = subtotal.toFixed(2);
-    cartTotalSpan.textContent = total.toFixed(2);
+  cartSubtotalSpan.textContent = subtotal.toFixed(2);
+  cartTotalSpan.textContent = total.toFixed(2);
 
-    cartMiniLabel.textContent =
-      qty === 0
-        ? "No jets yet"
-        : qty + " jet" + (qty > 1 ? "s" : "") + " ready (tax at checkout)";
-  }
+  cartMiniLabel.textContent =
+    qty === 0
+      ? "No jets yet"
+      : `${qty} jet${qty > 1 ? "s" : ""} ready for takeoff`;
+}
 
-  function addJetToCart() {
-    cart.qty = (cart.qty || 0) + 1;
-    cart.price = PRODUCT_PRICE;
-    saveCart();
-    updateCartUI();
-    if (heroBuyBtn) {
-      heroBuyBtn.textContent = "Added to hangar ✔";
-      setTimeout(() => (heroBuyBtn.textContent = "Add Jet to Hangar"), 1300);
-    }
-  }
+// ADD JET
+function addJet() {
+  cart.qty = (cart.qty || 0) + 1;
+  saveCart();
+  updateCartUI();
 
   if (heroBuyBtn) {
-    heroBuyBtn.addEventListener("click", addJetToCart);
+    heroBuyBtn.textContent = "Added ✔";
+    setTimeout(() => (heroBuyBtn.textContent = "Add Jet to Hangar"), 1500);
   }
+}
 
-  if (mobileAddBtn) {
-    mobileAddBtn.addEventListener("click", addJetToCart);
-  }
+// EVENTS
+if (heroBuyBtn) {
+  heroBuyBtn.addEventListener("click", addJet);
+}
 
-  // 🔥 Launch Jet now adds to cart AND goes straight to checkout
-  if (navBuyBtn) {
-    navBuyBtn.addEventListener("click", function () {
-      addJetToCart();
-      window.location.href = "checkout.html";
-    });
-  }
-
-  if (navCartBtn) {
-    navCartBtn.addEventListener("click", function () {
-      window.location.href = "cart.html";
-    });
-  }
-
-  // from mini cart drawer
-  if (cartCheckoutBtn) {
-    cartCheckoutBtn.addEventListener("click", function () {
-      window.location.href = "checkout.html";
-    });
-  }
-
-  // thumbnail switching
-  document.querySelectorAll(".thumb").forEach((thumb) => {
-    thumb.addEventListener("click", function () {
-      document
-        .querySelectorAll(".thumb")
-        .forEach((t) => t.classList.remove("active"));
-      thumb.classList.add("active");
-      const img = thumb.getAttribute("data-img");
-      heroJetImage.src = img;
-    });
+// Launch Jet → add + go to checkout
+if (launchBtn) {
+  launchBtn.addEventListener("click", function () {
+    addJet();
+    window.location.href = "checkout.html";
   });
+}
 
-  updateCartUI();
+// Cart icon → open cart page
+if (navCartBtn) {
+  navCartBtn.addEventListener("click", function () {
+    window.location.href = "cart.html";
+  });
+}
+
+// From mini cart → checkout
+if (cartCheckoutBtn) {
+  cartCheckoutBtn.addEventListener("click", function () {
+    window.location.href = "checkout.html";
+  });
+}
+
+// Initialize UI
+updateCartUI();
 </script>
 
 </body>
 </html>
+
 
