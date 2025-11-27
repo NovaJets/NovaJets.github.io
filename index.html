@@ -9,9 +9,7 @@
 
 <body>
 
-<!-- ===================== -->
 <!-- NAVBAR -->
-<!-- ===================== -->
 <header>
   <nav class="nav">
     <div class="nav-left">
@@ -31,156 +29,138 @@
   </nav>
 </header>
 
+
 <main class="wrap">
 
-
-<!-- ===================== -->
 <!-- HERO SECTION -->
-<!-- ===================== -->
 <section class="hero">
-  <div class="hero-text">
 
-    <div class="eyebrow">Aerospace-Inspired RC Engineering</div>
+  <!-- LEFT TEXT -->
+  <div>
+    <div class="eyebrow">Next-Gen RC Flight</div>
 
     <h1 class="hero-title">
-      Turn any open space into a <span class="hero-gradient">runway.</span>
+      The future of RC Jets. <br>
+      Meet the <span class="hero-gradient">NovaJet F-16X.</span>
     </h1>
 
     <p class="hero-sub">
-      The NovaJet RC Fighter is engineered for raw speed, altitude stability, and crash-resistant durability — making it perfect for beginners, pros, and thrill-seekers alike.
+      Engineered with altitude-hold AI, turbo-thrust motors, LED night flight, and a crash-proof EPP airframe.  
+      Designed for beginners, built for pros.
     </p>
 
     <div class="hero-meta-row">
-      <div class="pill"><strong>Height Hold AI</strong></div>
-      <div class="pill"><strong>Crash-Resistant Foam</strong></div>
+      <div class="pill"><strong>AI Height Hold</strong></div>
+      <div class="pill"><strong>Crash-Resistant</strong></div>
       <div class="pill pill-hot"><strong>35% OFF Today</strong></div>
     </div>
 
     <div class="hero-cta-row">
-      <button id="heroBuyBtn" class="btn-primary">
-        <span>＋</span> Add Jet to Hangar
+      <button id="heroBuyBtn" class="btn-primary">＋ Add to Hangar</button>
+      <button onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})" class="btn-ghost">
+        Explore Features
       </button>
-
-      <button onclick="document.getElementById('details').scrollIntoView({behavior:'smooth'})" 
-              class="btn-ghost">Explore Features</button>
     </div>
 
-    <div class="hero-trust">4,000+ pilots upgraded to NovaJet this year.</div>
+    <div class="hero-trust">Trusted by over 4,000 new pilots this year.</div>
   </div>
 
-  <!-- PRODUCT DISPLAY -->
+  <!-- RIGHT PRODUCT DISPLAY -->
   <div class="hero-display">
     <div class="hero-display-inner">
       <div class="hero-tag">Model <span>F-16X</span></div>
 
       <div class="hero-price-chip">
         <strong>$39.99</strong>
-        <small>Limited Sale</small>
+        <small>Limited Offer</small>
       </div>
 
-      <img id="heroJetImage" src="jet-hero.jpg" class="hero-jet-img" />
+      <img id="heroJetImage" src="jet-hero.jpg" class="hero-jet-img"/>
 
       <div class="hero-hud">
         <strong>Flight Suite v3.2</strong><br>
-        Auto-Leveling • Height Hold • Turbo Boost Mode
+        Auto-Leveling • Height Hold • Turbo Mode
       </div>
     </div>
 
     <div class="hero-thumb-strip">
-      <button class="thumb active" data-img="jet-hero.jpg">
-        <img src="jet-hero.jpg" />
-      </button>
-
-      <button class="thumb" data-img="jet-top.jpg">
-        <img src="jet-top.jpg" />
-      </button>
-
-      <button class="thumb" data-img="jet-night.jpg">
-        <img src="jet-night.jpg" />
-      </button>
+      <button class="thumb active" data-img="jet-hero.jpg"><img src="jet-hero.jpg"/></button>
+      <button class="thumb" data-img="jet-top.jpg"><img src="jet-top.jpg"/></button>
+      <button class="thumb" data-img="jet-night.jpg"><img src="jet-night.jpg"/></button>
     </div>
   </div>
+
 </section>
 
 
-
-<!-- ===================== -->
 <!-- FEATURES SECTION -->
-<!-- ===================== -->
-<section id="details" class="section">
+<section id="features" class="section">
   <div class="section-header">
-    <h2 class="section-title">Why NovaJet?</h2>
-    <p class="section-kicker">Precision flight tech. Built for real-world fun.</p>
+    <h2 class="section-title">Why Pilots Choose NovaJet</h2>
+    <div class="section-kicker">Flight performance built for real terrain.</div>
   </div>
 
   <div class="features-grid">
 
     <div class="feature-card">
       <div class="feature-label">01 — Stability</div>
-      <h4>AI Height-Hold Chip</h4>
-      <p>NovaJet automatically maintains altitude for smooth, controlled flights even for first-time pilots.</p>
+      <h4>AI Altitude Hold</h4>
+      <p>Keeps the NovaJet perfectly level, making it incredibly easy to fly — even for first-timers.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-label">02 — Power</div>
-      <h4>Twin-Boost Motor System</h4>
-      <p>Accelerate instantly with dual-motor thrust designed for speed, responsiveness, and tight maneuvering.</p>
+      <h4>Twin Turbo-Thrust Motors</h4>
+      <p>Instant acceleration and responsive steering for intense aerial maneuvers.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-label">03 — Durability</div>
-      <h4>Crash-Resistant Airframe</h4>
-      <p>Constructed from military-grade EPP foam — ultra-light, flexible, impact-absorbing.</p>
+      <h4>Crash-Proof EPP Body</h4>
+      <p>Flexible, shock-absorbent foam that survives nose-dives, flips, and rough landings.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-label">04 — Clarity</div>
-      <h4>Night-Flight LED System</h4>
-      <p>Fly at dusk or low light with built-in LED visibility markers and cockpit glow.</p>
+      <div class="feature-label">04 — Visibility</div>
+      <h4>LED Night Flight</h4>
+      <p>Integrated navigation LEDs keep you visually locked on during dusk flights.</p>
     </div>
 
   </div>
 </section>
 
 
-
-<!-- ===================== -->
-<!-- PERFORMANCE SPECS -->
-<!-- ===================== -->
+<!-- SPECS -->
 <section class="section">
   <div class="section-header">
     <h2 class="section-title">Performance Specs</h2>
-    <p class="section-kicker">Tested, verified, exhilarating.</p>
+    <div class="section-kicker">Stats that make it unbeatable.</div>
   </div>
 
   <div class="stat-row">
-    <div class="stat-pill"><strong>30 min</strong> flight time</div>
-    <div class="stat-pill"><strong>120 m</strong> control range</div>
-    <div class="stat-pill"><strong>Turbo</strong> speed mode</div>
-    <div class="stat-pill"><strong>Auto-Level</strong> gyro chip</div>
-    <div class="stat-pill"><strong>USB-C</strong> fast charging</div>
+    <div class="stat-pill"><strong>30 min</strong> Flight Time</div>
+    <div class="stat-pill"><strong>120 m</strong> Control Range</div>
+    <div class="stat-pill"><strong>Turbo</strong> Speed Mode</div>
+    <div class="stat-pill"><strong>USB-C</strong> Fast Charge</div>
+    <div class="stat-pill"><strong>Auto-Level</strong> Gyro</div>
   </div>
 </section>
 
 
-
-<!-- ===================== -->
 <!-- REVIEWS -->
-<!-- ===================== -->
 <section class="section">
   <div class="section-header">
     <h2 class="section-title">Pilot Reviews</h2>
-    <p class="section-kicker">Real flights. Real reactions.</p>
+    <div class="section-kicker">Real reactions from real flights.</div>
   </div>
 
   <div class="reviews-grid">
-
     <div class="review-card">
       <div class="review-header">
         <strong>Daniel K.</strong>
         <div class="stars">★★★★★</div>
       </div>
-      <p>“Best RC jet I’ve flown. Stable, fast, and insanely fun. The height-hold feature makes it feel futuristic.”</p>
+      <p>“Fast, stable, and shockingly easy to fly. Best RC jet I’ve owned.”</p>
     </div>
 
     <div class="review-card">
@@ -188,7 +168,7 @@
         <strong>Lucas M.</strong>
         <div class="stars">★★★★★</div>
       </div>
-      <p>“Crashed twice learning and it survived without a scratch. Great for beginners.”</p>
+      <p>“Crashed twice on day one — barely a dent. This thing is indestructible.”</p>
     </div>
 
     <div class="review-card">
@@ -196,50 +176,37 @@
         <strong>Ashley P.</strong>
         <div class="stars">★★★★★</div>
       </div>
-      <p>“My son loves it. We fly it every weekend — battery life is way better than expected.”</p>
+      <p>“My kid LOVES it. Battery lasts way longer than expected.”</p>
     </div>
-
   </div>
 </section>
 
 
-
-<!-- ===================== -->
 <!-- FAQ -->
-<!-- ===================== -->
 <section class="section">
   <div class="section-header">
     <h2 class="section-title">FAQ</h2>
-    <p class="section-kicker">Everything pilots ask.</p>
   </div>
 
   <div class="faq-item">
     <div class="faq-q">Is NovaJet beginner-friendly?</div>
-    <div class="faq-a">Yes — auto-stabilization and height-hold make it extremely easy to control.</div>
+    <div class="faq-a">Yes. Auto-leveling and altitude hold make it nearly foolproof.</div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">How durable is it?</div>
-    <div class="faq-a">The airframe is made from EPP foam — flexible, shock-absorbent, and nearly unbreakable.</div>
+    <div class="faq-q">Does it include a remote?</div>
+    <div class="faq-a">Yes — the full controller system is included.</div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">Does it include a controller?</div>
-    <div class="faq-a">Yes, the full remote-control system is included in the box.</div>
+    <div class="faq-q">How long does it take to charge?</div>
+    <div class="faq-a">45–60 minutes using USB-C.</div>
   </div>
-
-  <div class="faq-item">
-    <div class="faq-q">What’s the recommended charging time?</div>
-    <div class="faq-a">45–60 minutes for a full charge using USB-C.</div>
-  </div>
-
 </section>
 
 
 
-<!-- ===================== -->
-<!-- MINI CART DRAWER -->
-<!-- ===================== -->
+<!-- MINI CART -->
 <aside class="cart-drawer" id="cartDrawer">
   <div class="cart-drawer-header">
     <div class="cart-drawer-title">Your Hangar</div>
@@ -247,13 +214,8 @@
 
   <p id="cartMiniLabel" class="cart-mini-note"></p>
 
-  <div class="cart-line">
-    <span>Qty:</span><span id="cartQty"></span>
-  </div>
-
-  <div class="cart-line">
-    <span>Subtotal:</span>$<span id="cartSubtotal">0.00</span>
-  </div>
+  <div class="cart-line"><span>Qty:</span><span id="cartQty">0</span></div>
+  <div class="cart-line"><span>Subtotal:</span>$<span id="cartSubtotal">0.00</span></div>
 
   <div class="cart-line cart-total">
     <span>Total:</span><strong>$<span id="cartTotal">0.00</span></strong>
@@ -263,7 +225,9 @@
 </aside>
 
 
+
 </main>
+
 
 <footer>
   <div class="footer-inner">
@@ -279,9 +243,7 @@
 
 
 
-<!-- ===================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================== -->
+<!-- JAVASCRIPT (unchanged logic) -->
 <script>
 const PRODUCT_PRICE = 39.99;
 const TAX_RATE = 0.0968;
@@ -291,11 +253,11 @@ let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0 };
 
 const navCartBtn = document.getElementById("navCartBtn");
 const navCartCount = document.getElementById("navCartCount");
-const navBuyBtn = document.getElementById("navBuyBtn");
 const heroBuyBtn = document.getElementById("heroBuyBtn");
-const cartMiniLabel = document.getElementById("cartMiniLabel");
+const navBuyBtn = document.getElementById("navBuyBtn");
 const cartQtySpan = document.getElementById("cartQty");
 const cartSubtotalSpan = document.getElementById("cartSubtotal");
+const cartMiniLabel = document.getElementById("cartMiniLabel");
 const cartTotalSpan = document.getElementById("cartTotal");
 const cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
 const heroJetImage = document.getElementById("heroJetImage");
@@ -305,11 +267,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
 function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
 
 function updateCartUI(){
-  const qty = cart.qty || 0;
-
-  if(qty <= 0){
+  if(cart.qty <= 0){
     navCartCount.style.display="none";
-    cartMiniLabel.textContent = "Hangar is empty.";
+    cartMiniLabel.textContent = "No jets yet.";
     cartQtySpan.textContent = "0";
     cartSubtotalSpan.textContent = "0.00";
     cartTotalSpan.textContent = "0.00";
@@ -317,40 +277,38 @@ function updateCartUI(){
   }
 
   navCartCount.style.display="inline-block";
-  navCartCount.textContent = qty;
+  navCartCount.textContent = cart.qty;
 
-  cartQtySpan.textContent = qty;
+  const subtotal = cart.qty * PRODUCT_PRICE;
+  const total = subtotal + subtotal * TAX_RATE;
 
-  const subtotal = qty * PRODUCT_PRICE;
-  const tax = subtotal * TAX_RATE;
-  const total = subtotal + tax;
-
+  cartQtySpan.textContent = cart.qty;
   cartSubtotalSpan.textContent = subtotal.toFixed(2);
   cartTotalSpan.textContent = total.toFixed(2);
 
-  cartMiniLabel.textContent = qty + " jet" + (qty > 1 ? "s" : "") + " ready";
+  cartMiniLabel.textContent = cart.qty + " jet" + (cart.qty > 1 ? "s" : "") + " ready";
 }
 
 function addJet(){
-  cart.qty = (cart.qty || 0) + 1;
+  cart.qty++;
   saveCart();
   updateCartUI();
 
   heroBuyBtn.textContent = "Added ✔";
-  setTimeout(()=>heroBuyBtn.textContent = "Add Jet to Hangar", 1200);
+  setTimeout(()=>heroBuyBtn.textContent = "＋ Add to Hangar", 1200);
 }
 
 heroBuyBtn.onclick = addJet;
-navBuyBtn.onclick = () => { addJet(); window.location.href="checkout.html"; };
-navCartBtn.onclick = () => window.location.href="cart.html";
-cartCheckoutBtn.onclick = () => window.location.href="cart.html";
+navBuyBtn.onclick = ()=>{ addJet(); window.location.href="checkout.html"; };
+navCartBtn.onclick = ()=> window.location.href="cart.html";
+cartCheckoutBtn.onclick = ()=> window.location.href="cart.html";
 
 document.querySelectorAll(".thumb").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    document.querySelectorAll(".thumb").forEach(x=>x.classList.remove("active"));
+  btn.onclick = ()=>{
+    document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
     btn.classList.add("active");
     heroJetImage.src = btn.dataset.img;
-  });
+  };
 });
 
 updateCartUI();
