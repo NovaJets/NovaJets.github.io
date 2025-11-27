@@ -46,27 +46,25 @@
   const PRODUCT_PRICE = 39.99;
   const TAX_RATE = 0.0968;
 
-
   const summaryDiv = document.getElementById("orderSummary");
   const totalAmountSpan = document.getElementById("totalAmount");
   const payBtn = document.getElementById("payBtn");
   const yearSpan = document.getElementById("year");
-  const subtotal = PRODUCT_PRICE * qty;
-const taxAmount = subtotal * TAX_RATE;
-const total = subtotal + taxAmount;
-
-totalAmountSpan.textContent = total.toFixed(2);
 
   yearSpan.textContent = new Date().getFullYear();
 
   let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { qty: 0, price: PRODUCT_PRICE };
   const qty = cart.qty || 0;
 
+  // If somehow no items, send back to cart
   if (qty <= 0) {
     window.location.href = "cart.html";
   }
 
-  const total = PRODUCT_PRICE * qty;
+  const subtotal = PRODUCT_PRICE * qty;
+  const taxAmount = subtotal * TAX_RATE;
+  const total = subtotal + taxAmount;
+
   totalAmountSpan.textContent = total.toFixed(2);
 
   summaryDiv.className = "summary";
@@ -81,6 +79,9 @@ totalAmountSpan.textContent = total.toFixed(2);
     <div><strong>Item:</strong> NoveJet RC Fighter</div>
     <div><strong>Quantity:</strong> ${qty}</div>
     <div><strong>Unit price:</strong> $${PRODUCT_PRICE.toFixed(2)} USD</div>
+    <div><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</div>
+    <div><strong>Tax (9.68%):</strong> $${taxAmount.toFixed(2)}</div>
+    <div><strong>Total:</strong> $${total.toFixed(2)} USD</div>
     <div><strong>Discount:</strong> 35% already applied</div>
   `;
 
@@ -117,6 +118,8 @@ totalAmountSpan.textContent = total.toFixed(2);
     rzp.open();
   };
 </script>
+
 </body>
 </html>
+
 
