@@ -17,36 +17,64 @@
     <!-- ======================== -->
     <!-- SHIPPING FORM -->
     <!-- ======================== -->
-    <form id="shippingForm" class="checkout-form">
+   <form id="shippingForm" class="checkout-form">
 
-      <label>Full Name *</label>
-      <input type="text" id="fullName" required>
+  <div class="field full">
+    <span class="icon">👤</span>
+    <input type="text" id="fullName" placeholder=" " required>
+    <label>Full Name *</label>
+  </div>
 
-      <label>Email *</label>
-      <input type="email" id="email" required>
+  <div class="field">
+    <span class="icon">📧</span>
+    <input type="email" id="email" placeholder=" " required>
+    <label>Email *</label>
+  </div>
 
-      <label>Phone Number *</label>
-      <input type="tel" id="phone" required>
+  <div class="field">
+    <span class="icon">📱</span>
+    <input type="tel" id="phone" placeholder=" " required>
+    <label>Phone Number *</label>
+  </div>
 
-      <label>Address Line 1 *</label>
-      <input type="text" id="address1" required>
+  <div class="field full">
+    <span class="icon">🏠</span>
+    <input type="text" id="address1" placeholder=" " required>
+    <label>Address Line 1 *</label>
+  </div>
 
-      <label>Address Line 2 (optional)</label>
-      <input type="text" id="address2">
+  <div class="field full">
+    <span class="icon">🏢</span>
+    <input type="text" id="address2" placeholder=" ">
+    <label>Address Line 2 (optional)</label>
+  </div>
 
-      <label>City *</label>
-      <input type="text" id="city" required>
+  <div class="field">
+    <span class="icon">🌆</span>
+    <input type="text" id="city" placeholder=" " required>
+    <label>City *</label>
+  </div>
 
-      <label>State / Province *</label>
-      <input type="text" id="state" required>
+  <div class="field">
+    <span class="icon">📍</span>
+    <input type="text" id="state" placeholder=" " required>
+    <label>State / Province *</label>
+  </div>
 
-      <label>ZIP / Postal Code *</label>
-      <input type="text" id="zip" required>
+  <div class="field">
+    <span class="icon">🏷️</span>
+    <input type="text" id="zip" placeholder=" " required>
+    <label>ZIP / Postal Code *</label>
+  </div>
 
-      <label>Country *</label>
-      <input type="text" id="country" required>
+  <div class="field">
+    <span class="icon">🌎</span>
+    <input type="text" id="country" placeholder=" " required>
+    <label>Country *</label>
+  </div>
 
-    </form>
+</form>
+
 
     <!-- ORDER SUMMARY -->
     <h2 style="margin-top:25px;">Order Summary</h2>
@@ -176,5 +204,6 @@ payBtn.onclick = function () {
 
 </body>
 </html>
+
 
 
