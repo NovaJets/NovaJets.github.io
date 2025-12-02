@@ -983,4 +983,67 @@ footer {
     bottom: 0;
     margin-top: 1.2rem;
   }
+  /* ====================== */
+/* CHECKOUT FORM STYLING  */
+/* ====================== */
+
+.checkout-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 1rem;
+}
+
+.checkout-form label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: rgba(6, 7, 22, 0.95);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: border 0.15s ease, background 0.15s ease;
+}
+
+.checkout-form input:focus {
+  border-color: var(--accent);
+  background: rgba(8, 10, 28, 1);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 242, 255, 0.25);
+}
+
+.checkout-form input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+/* Order summary box */
+.summary {
+  margin-top: 1rem;
+  background: rgba(7, 8, 24, 0.95);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 1rem 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.summary div {
+  margin-bottom: 6px;
+}
+
+.amount {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  text-align: right;
+  color: var(--text);
+}
+
+.amount strong {
+  color: var(--accent);
+}
+
 }
