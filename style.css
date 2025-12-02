@@ -983,61 +983,95 @@ footer {
     bottom: 0;
     margin-top: 1.2rem;
   }
-  /* ====================== */
-/* CHECKOUT FORM STYLING  */
-/* ====================== */
+/* ===================================================== */
+/*            PREMIUM NOVAJET CHECKOUT FORM              */
+/* ===================================================== */
 
 .checkout-form {
   display: grid;
-  gap: 14px;
-  margin-top: 1rem;
+  gap: 18px;
+  margin-top: 1.5rem;
+  grid-template-columns: 1fr 1fr;
 }
 
-.checkout-form label {
-  font-size: 0.85rem;
-  color: var(--muted);
+.checkout-form .full {
+  grid-column: span 2;
 }
 
-.checkout-form input {
+/* Floating label wrapper */
+.field {
+  position: relative;
   width: 100%;
-  padding: 0.75rem 0.9rem;
-  background: rgba(6, 7, 22, 0.95);
+}
+
+.field input {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  padding-left: 2.6rem; /* space for icon */
+  background: rgba(8, 10, 28, 0.95);
   border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 0.9rem;
-  transition: border 0.15s ease, background 0.15s ease;
-}
-
-.checkout-form input:focus {
-  border-color: var(--accent);
-  background: rgba(8, 10, 28, 1);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(74, 242, 255, 0.25);
-}
-
-.checkout-form input::placeholder {
-  color: rgba(255,255,255,0.35);
-}
-
-/* Order summary box */
-.summary {
-  margin-top: 1rem;
-  background: rgba(7, 8, 24, 0.95);
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 1rem 1.2rem;
+  color: var(--text);
+  font-size: 0.92rem;
+  transition: 0.2s ease;
+}
+
+.field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(74, 242, 255, 0.25);
+  outline: none;
+  background: rgba(10, 12, 32, 1);
+}
+
+/* Floating label */
+.field label {
+  position: absolute;
+  left: 2.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(255,255,255,0.45);
   font-size: 0.9rem;
+  transition: 0.2s ease;
+}
+
+/* When user types */
+.field input:not(:placeholder-shown) + label,
+.field input:focus + label {
+  top: 0.3rem;
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+/* Icons inside fields */
+.field .icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+/* Summary styling */
+.summary {
+  margin-top: 2rem;
+  background: rgba(7, 8, 28, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 1.4rem 1.3rem;
+  font-size: 0.95rem;
   color: var(--text);
 }
 
 .summary div {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .amount {
-  margin-top: 1rem;
-  font-size: 1.05rem;
+  margin-top: 1.4rem;
+  font-size: 1.15rem;
   text-align: right;
   color: var(--text);
 }
@@ -1046,4 +1080,23 @@ footer {
   color: var(--accent);
 }
 
+/* Error state */
+.field.error input {
+  border-color: #ff5c7a;
+  box-shadow: 0 0 0 2px rgba(255, 92, 122, 0.25);
+}
+
+.field.error label {
+  color: #ff5c7a !important;
+}
+
+/* Mobile layout fixes */
+@media(max-width: 720px) {
+  .checkout-form {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-form .full {
+    grid-column: span 1;
+  }
 }
